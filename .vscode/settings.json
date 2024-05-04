@@ -1,0 +1,11 @@
+{
+	"json.schemas": [
+
+	],
+	"C_Cpp.default.enableConfigurationSquiggles": true,
+	"files.associations": {
+		"array": "c",
+		"types.h": "c",
+		"wait.h": "c"
+	}
+}

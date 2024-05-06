@@ -1,17 +1,13 @@
 #include "pipex.h"
 
-	// // test
-	// char *buffer;
-	// buffer = malloc(sizeof(char)*42);
-	// buffer = get_next_line(pipefd[0]);
-	// ft_printf("that's crazy %s end \n", buffer);
 
 static void	ft_exe_snd_cmd(t_data *pipex, char **envp, int *pipefd)
 {
 	int fd_outfile;
-	
+
 	close(pipefd[1]);
-	fd_outfile = open(pipex->outfile, O_RDWR | O_CREAT , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	unlink(pipex->outfile);
+	fd_outfile = open(pipex->outfile, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd_outfile == -1)
 		return ;
 	if (dup2(pipefd[0], 0) == -1)
@@ -24,7 +20,7 @@ static void	ft_exe_snd_cmd(t_data *pipex, char **envp, int *pipefd)
 static void	ft_exe_fst_cmd(t_data *pipex, char **envp, int *pipefd)
 {
 	int	fd_infile;
-	
+
 	close(pipefd[0]);
 	fd_infile = open(pipex->infile, O_RDONLY);
 	if (fd_infile == -1)
@@ -40,12 +36,13 @@ void	ft_pipex(t_data *pipex, char **envp)
 {
 	int		pipefd[2];
 	pid_t 	pid;
+	pid_t	pid2;
 
 	if (pipe(pipefd) == -1)
 		ft_exit_failure("Pipe function issue in ft_pipex.c", pipex);
 	pid = fork();
 	if (pid == -1)
-		ft_exit_failure("Fork function issue in ft_pipex.c", pipex);
+		ft_exit_failure("Fork function n1 issue in ft_pipex.c", pipex);
 	if (pid == 0)
 	{
 		ft_exe_fst_cmd(pipex, envp, pipefd);
@@ -54,9 +51,18 @@ void	ft_pipex(t_data *pipex, char **envp)
 	}
 	else
 	{
-		waitpid(0, NULL, 0);
-		ft_exe_snd_cmd(pipex, envp, pipefd);
-		close(pipefd[0]);
-		ft_exit_failure("Second command execution issue in ft_pipex.c", pipex);
-	}
+		pid2 = fork();
+		if (pid2 == -1)
+			ft_exit_failure("Fork function n2 issue in ft_pipex.c", pipex);
+		if (pid2 == 0)
+		{
+			ft_exe_snd_cmd(pipex, envp, pipefd);
+			close(pipefd[0]);
+			ft_exit_failure("Second command execution issue in ft_pipex.c", pipex);
+		}
+	}	
+	close(pipefd[0]);
+	close(pipefd[1]);
+	wait(NULL);
+	wait(NULL);
 }

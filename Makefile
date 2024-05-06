@@ -1,6 +1,6 @@
 NAME = pipex
 CC = cc
-#FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 LIBFT = libft.a
 SRC = 	src/main.c \
@@ -22,7 +22,7 @@ clean:
 
 fclean: clean
 	@make --no-print-directory fclean -C libft
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
 
 re: fclean all
-	@./pipex infile "grep hello" "wc -l" outfile
+	@valgrind ./pipex in "ls -l" "cat" outfile	

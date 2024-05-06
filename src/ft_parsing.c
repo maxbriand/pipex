@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:03 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/03 16:12:03 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 01:14:06 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	**ft_get_path_list(t_data *pipex, char *full_cmd, char **envp)
 	char	**save_path_list;
 	char	**path_list;
 
-	path_list = ft_get_env_paths(pipex, envp);		
+	path_list = ft_get_env_paths(pipex, envp);
 	cmd = ft_strcut(full_cmd, ' ');
 	if (cmd == NULL)
 	{
@@ -91,7 +91,9 @@ static char	**ft_get_path_list(t_data *pipex, char *full_cmd, char **envp)
 		ft_exit_failure("Malloc issue during path creation", pipex);
 	}
 	save_path_list = path_list;
-	path_list = ft_modify_full_array(path_list, cmd);
+	path_list = ft_modify_full_array(path_list, cmd);	
+	if (cmd != full_cmd)
+		free(cmd);
 	ft_free_str_array(save_path_list);
 	if (path_list == NULL)
 		ft_exit_failure ("Malloc issue during path creation", pipex);
@@ -100,12 +102,17 @@ static char	**ft_get_path_list(t_data *pipex, char *full_cmd, char **envp)
 
 // continue to add t_data
 	// begin testing the cmd without
-char	*ft_check_path(t_data *pipex, char *full_cmd, char **envp)
+char	*ft_check_path(t_data *pipex, char *full_cmd, char **envp, int *acs)
 {
 	char	**paths;
 	char	**save_paths;
 	char	*store;
 
+	if (access(full_cmd, R_OK) == 0)
+	{
+		*acs += 1;
+		return (full_cmd);
+	}
 	paths = ft_get_path_list(pipex, full_cmd, envp);
 	save_paths = paths;
 	while (*paths)
@@ -114,12 +121,15 @@ char	*ft_check_path(t_data *pipex, char *full_cmd, char **envp)
 		{
 			store = ft_strdup(*paths);
 			ft_free_str_array(save_paths);
+			if (store == NULL)
+				ft_exit_failure("strdup malloc issue", pipex);
 			return (store);
 		}
 		paths++;
 	}
 	ft_free_str_array(save_paths);
 	ft_exit_failure("Not existing path for a command", pipex);
+	return (NULL);
 }
 
 static void	ft_wrong_infile(t_data *pipex, char *infile)
@@ -142,6 +152,6 @@ void	ft_parsing(t_data *pipex, int ac, char **av, char **envp)
 {
 	ft_wrong_arg_number(pipex, ac);
 	ft_wrong_infile(pipex, *av);
-	pipex->path_cmd_one = ft_check_path(pipex, av[1], envp);
-	pipex->path_cmd_two = ft_check_path(pipex, av[2], envp);
+	pipex->path_cmd_one = ft_check_path(pipex, av[1], envp, &(pipex->acs1));
+	pipex->path_cmd_two = ft_check_path(pipex, av[2], envp, &(pipex->acs2));
 }

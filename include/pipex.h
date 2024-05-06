@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:23:24 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/04 17:40:41 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 00:38:22 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_data
 	char	*path_cmd_two;
 	char	*infile;
 	char	*outfile;
+	int		acs1;
+	int		acs2;
 }	t_data;
 
 // Handle error

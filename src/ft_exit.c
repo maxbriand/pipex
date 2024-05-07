@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/07 17:58:06 by mbriand           #+#    #+#             */
+/*   Updated: 2024/05/07 17:58:07 by mbriand          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static void	ft_free_pipex(t_data *pipex)
@@ -10,6 +22,8 @@ static void	ft_free_pipex(t_data *pipex)
 		ft_free_str_array(pipex->cmd_one);
 	if (pipex->cmd_two != NULL)
 		ft_free_str_array(pipex->cmd_two);
+	if (pipex->fd_outfile != -1)
+		close(pipex->fd_outfile);
 	free(pipex);
 }
 

@@ -1,17 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/07 17:58:37 by mbriand           #+#    #+#             */
+/*   Updated: 2024/05/07 17:58:38 by mbriand          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-
 static void	ft_exe_snd_cmd(t_data *pipex, char **envp, int *pipefd)
-{
-	int fd_outfile;
-
+{	
 	close(pipefd[1]);
-	fd_outfile = open(pipex->outfile, O_WRONLY | O_TRUNC | O_CREAT , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	if (fd_outfile == -1)
-		return ;
+	pipex->path_cmd_two = ft_check_path(pipex, pipex->av2, envp, &(pipex->acs2));
 	if (dup2(pipefd[0], 0) == -1)
 		return ;
-	if (dup2(fd_outfile, 1) == -1)
+	if (dup2(pipex->fd_outfile, 1) == -1)
 		return ;
 	execve(pipex->path_cmd_two, pipex->cmd_two, envp);
 }
@@ -21,6 +28,7 @@ static void	ft_exe_fst_cmd(t_data *pipex, char **envp, int *pipefd)
 	int	fd_infile;
 
 	close(pipefd[0]);
+	pipex->path_cmd_one = ft_check_path(pipex, pipex->av1, envp, &(pipex->acs1));
 	fd_infile = open(pipex->infile, O_RDONLY);
 	if (fd_infile == -1)
 		return ;
@@ -28,7 +36,8 @@ static void	ft_exe_fst_cmd(t_data *pipex, char **envp, int *pipefd)
 		return ;
 	if (dup2(pipefd[1], 1) == -1)
 		return ;
-	execve(pipex->path_cmd_one, pipex->cmd_one, envp);	
+	execve(pipex->path_cmd_one, pipex->cmd_one, envp);
+	close(fd_infile);
 }
 
 void	ft_pipex(t_data *pipex, char **envp)

@@ -1,7 +1,16 @@
-#include "pipex.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/07 17:57:45 by mbriand           #+#    #+#             */
+/*   Updated: 2024/05/07 17:57:58 by mbriand          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// handle ./bin/ls ? what's the behavior when I unset path in env var?
-	// if I use the path as command the command is run?
+#include "pipex.h"
 
 static void	ft_fill_cmd(t_data *pipex, char **av)
 {
@@ -13,16 +22,23 @@ static void	ft_fill_cmd(t_data *pipex, char **av)
 		ft_exit_failure("issue command creation in main.c", pipex);
 }
 
-static void	ft_init_pipex(t_data *pipex, char **av)
+static void	ft_init_pipex(t_data *pipex, char **av, int ac)
 {
+	if (ac >= 2)
+		pipex->av1 = av[1];
+	if (ac >= 3)
+		pipex->av2 = av[2];
 	pipex->cmd_one = NULL;
 	pipex->cmd_two = NULL;
 	pipex->path_cmd_one = NULL;
 	pipex->path_cmd_two = NULL;
-	pipex->infile = av[0];
-	pipex->outfile = av[3];
+	if (ac >= 1)
+		pipex->infile = av[0];
+	if (ac >= 4)
+		pipex->outfile = av[3];
 	pipex->acs1 = 0;
 	pipex->acs2 = 0;
+	pipex->fd_outfile = -1;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -34,8 +50,8 @@ int	main(int ac, char **av, char **envp)
 	pipex = malloc(sizeof(t_data));
 	if (pipex == NULL)
 		ft_exit_failure("malloc issue on pipex variable", pipex);
-	ft_init_pipex(pipex, av);
-	ft_parsing(pipex, ac, av, envp);
+	ft_init_pipex(pipex, av, ac);
+	ft_parsing(pipex, ac, av);
 	ft_fill_cmd(pipex, av);
 	ft_pipex(pipex, envp);
 	ft_exit_success(pipex);

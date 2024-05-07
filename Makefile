@@ -7,6 +7,7 @@ SRC = 	src/main.c \
 		src/ft_exit.c \
 		src/ft_parsing.c \
 		src/ft_pipex.c \
+		src/ft_check_path.c \
 		\
 
 all: $(NAME)
@@ -26,4 +27,4 @@ fclean: clean
 
 re: fclean all
 	@clear
-	@valgrind ./pipex in "wc -w" "cat" outfile	
+	@valgrind ./pipex in "./pipex" "/bin/cat" outfile

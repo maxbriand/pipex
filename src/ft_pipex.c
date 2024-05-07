@@ -6,8 +6,7 @@ static void	ft_exe_snd_cmd(t_data *pipex, char **envp, int *pipefd)
 	int fd_outfile;
 
 	close(pipefd[1]);
-	unlink(pipex->outfile);
-	fd_outfile = open(pipex->outfile, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	fd_outfile = open(pipex->outfile, O_WRONLY | O_TRUNC | O_CREAT , S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd_outfile == -1)
 		return ;
 	if (dup2(pipefd[0], 0) == -1)

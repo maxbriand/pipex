@@ -25,4 +25,5 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-	@valgrind ./pipex in "ls -l" "cat" outfile	
+	@clear
+	@valgrind ./pipex in "wc -w" "cat" outfile	

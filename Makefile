@@ -27,4 +27,4 @@ fclean: clean
 
 re: fclean all
 	@clear
-	@valgrind ./pipex in "./pipex" "/bin/cat" outfile
+	@valgrind ./pipex in "/bin/ls -l" "cat" outfile

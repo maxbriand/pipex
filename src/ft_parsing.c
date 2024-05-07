@@ -6,13 +6,13 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:03 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:04:02 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:08:38 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_sc(char	**str)
+int	ft_sc(char **str)
 {
 	int	i;
 
@@ -32,9 +32,9 @@ static void	ft_wrong_infile(t_data *pipex, char *infile)
 		ft_exit_failure("The infile is not readable", pipex);
 }
 
-static void ft_open_outfile(t_data *pipex)
+static void	ft_open_outfile(t_data *pipex)
 {
-	pipex->fd_outfile = open(pipex->outfile, O_WRONLY | O_TRUNC | O_CREAT ,\
+	pipex->fd_outfile = open(pipex->outfile, O_WRONLY | O_TRUNC | O_CREAT, \
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (pipex->fd_outfile == -1)
 		ft_exit_failure("open outfile issue in main.c", pipex);

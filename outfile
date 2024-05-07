@@ -1,0 +1,10 @@
+total 64
+-r--r----- 1 maxime maxime   781 mai    6 18:01 in
+drwxrwxr-x 2 maxime maxime  4096 avril 30 17:30 include
+-r--r----- 1 maxime maxime   241 mai    6 15:45 infile
+drwxrwxr-x 4 maxime maxime  4096 mai    7 18:20 libft
+-rw-rw-r-- 1 maxime maxime   529 mai    7 18:14 Makefile
+-rw-rw-r-- 1 maxime maxime     0 mai    7 18:20 outfile
+-rwxrwxr-x 1 maxime maxime 33160 mai    7 18:20 pipex
+-rw-rw-r-- 1 maxime maxime   749 mai    1 17:13 README.md
+drwxrwxr-x 2 maxime maxime  4096 mai    7 18:02 src

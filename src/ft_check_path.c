@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:03:53 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:03:54 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:09:08 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static char	*ft_is_already_path(char *full_cmd, int *acs)
 	char	*al_path;
 
 	al_path = ft_strcut(full_cmd, ' ');
-
 	if (access(al_path, R_OK) == 0)
 	{
 		if (al_path == full_cmd)
@@ -108,7 +107,7 @@ char	*ft_check_path(t_data *pipex, char *full_cmd, char **envp, int *acs)
 	char	**save_paths;
 	char	*store;
 	char	*al_path;
-	
+
 	al_path = ft_is_already_path(full_cmd, acs);
 	if (al_path != NULL)
 		return (al_path);

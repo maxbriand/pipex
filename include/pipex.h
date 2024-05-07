@@ -6,25 +6,25 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:23:24 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:05:31 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 18:19:50 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# include <unistd.h>
+# include "libft.h"
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 typedef struct s_data
 {
 	char	**cmd_one;
 	char	**cmd_two;
-	char 	*path_cmd_one;
+	char	*path_cmd_one;
 	char	*path_cmd_two;
 	char	*infile;
 	char	*outfile;

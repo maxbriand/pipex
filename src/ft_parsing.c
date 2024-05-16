@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:03 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:08:38 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:11:11 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	ft_open_outfile(t_data *pipex)
 	pipex->fd_outfile = open(pipex->outfile, O_WRONLY | O_TRUNC | O_CREAT, \
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (pipex->fd_outfile == -1)
-		ft_exit_failure("open outfile issue in main.c", pipex);
+		ft_exit_failure("open outfile issue in ft_parsing.c", pipex);
 }
 
 static void	ft_wrong_arg_number(t_data *pipex, int ac)

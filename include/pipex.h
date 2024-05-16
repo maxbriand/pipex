@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:23:24 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:19:50 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 22:45:58 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ typedef struct s_data
 {
 	char	**cmd_one;
 	char	**cmd_two;
+	char	*cutcmd;
+	int		chk_cutcmd;
+	char	*av1;
+	char	*av2;
 	char	*path_cmd_one;
 	char	*path_cmd_two;
 	char	*infile;
@@ -31,8 +35,7 @@ typedef struct s_data
 	int		acs1;
 	int		acs2;
 	int		fd_outfile;
-	char	*av1;
-	char	*av2;
+	int		pipefd[2];
 }	t_data;
 
 // Handle error

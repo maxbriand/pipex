@@ -26,5 +26,3 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-	@clear
-	@valgrind ./pipex in "/bin/ls -l" "cat" outfile

@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:57:45 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 17:57:58 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 22:51:30 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static void	ft_init_pipex(t_data *pipex, char **av, int ac)
 	pipex->acs1 = 0;
 	pipex->acs2 = 0;
 	pipex->fd_outfile = -1;
+	pipex->cutcmd = NULL;
+	pipex->chk_cutcmd = 0;
+	pipex->pipefd[0] = -2;
+	pipex->pipefd[1] = -2;
 }
 
 int	main(int ac, char **av, char **envp)

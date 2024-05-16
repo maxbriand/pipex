@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:03:53 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 18:09:08 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:23:00 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ static char	**ft_get_env_paths(t_data *pipex, char **envp)
 	char	**env_paths;
 	char	**save_env_paths;
 
-	while (envp)
+	while (envp && *envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 			break ;
 		envp++;
 	}
-	if (envp == NULL)
+	if (*envp == NULL)
 		ft_exit_failure("Command file not found", pipex);
 	env_paths = ft_split(*envp + 5, ':');
 	if (env_paths == NULL)
@@ -64,21 +64,17 @@ static char	**ft_get_env_paths(t_data *pipex, char **envp)
 
 static char	**ft_get_path_list(t_data *pipex, char *full_cmd, char **envp)
 {
-	char	*cmd;
 	char	**save_path_list;
 	char	**path_list;
 
-	path_list = ft_get_env_paths(pipex, envp);
-	cmd = ft_strcut(full_cmd, ' ');
-	if (cmd == NULL)
-	{
-		ft_free_str_array(path_list);
+	pipex->cutcmd = ft_strcut(full_cmd, ' ');
+	if (pipex->cutcmd == NULL)
 		ft_exit_failure("Malloc issue during path creation", pipex);
-	}
+	if (pipex->cutcmd != full_cmd)
+		pipex->chk_cutcmd = 1;
+	path_list = ft_get_env_paths(pipex, envp);
 	save_path_list = path_list;
-	path_list = ft_modify_full_array(path_list, cmd);
-	if (cmd != full_cmd)
-		free(cmd);
+	path_list = ft_modify_full_array(path_list, pipex->cutcmd);
 	ft_free_str_array(save_path_list);
 	if (path_list == NULL)
 		ft_exit_failure ("Malloc issue during path creation", pipex);

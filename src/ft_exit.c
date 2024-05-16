@@ -6,7 +6,7 @@
 /*   By: mbriand <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:58:06 by mbriand           #+#    #+#             */
-/*   Updated: 2024/05/07 17:58:07 by mbriand          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:23:08 by mbriand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ static void	ft_free_pipex(t_data *pipex)
 		ft_free_str_array(pipex->cmd_two);
 	if (pipex->fd_outfile != -1)
 		close(pipex->fd_outfile);
+	if (pipex->cutcmd != NULL && pipex->chk_cutcmd == 1)
+		free(pipex->cutcmd);
+	if (pipex->pipefd[0] != -2)
+		close(pipex->pipefd[0]);
+	if (pipex->pipefd[1] != -2)
+		close(pipex->pipefd[1]);
 	free(pipex);
 }
 
